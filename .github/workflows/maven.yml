@@ -1,4 +1,4 @@
-name: Java CI with Maven on Linux
+name: JavaCI with Maven on Linux
 
 on:
   push:
@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        # test against several Java versions:
+        # test against several Java versions
         java: [8,11]
 
     name: Build with Java ${{matrix.java}} on Linux

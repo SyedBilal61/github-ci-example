@@ -1,14 +1,17 @@
-name: Java CI with Maven for PR
+name: JavaCI with Maven for PR
 
 on:
-  pull_request:   # run only on pull requests
+  pull_request:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{matrix.os}}
     strategy:
       matrix:
-        os: [macos-latest, windows-latest]  # test on these OSes
+        # test against several OSes
+        os: [macos-latest, windows-latest]
+
+    name: Build with Java 8 on ${{matrix.os}}
     steps:
       - uses: actions/checkout@v2
       - name: Setup JDK 8
