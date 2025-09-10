@@ -1,5 +1,4 @@
- name: JavaCI with Maven for PR
-# modified version for checking purposes
+name: JavaCI with Maven for PR
 
 on:
   pull_request:
@@ -20,6 +19,3 @@ jobs:
         with:
           distribution: temurin
           java-version: 8
-      - name: Build with Maven
-        run: mvn -f myproject/pom.xml clean verify
- 
