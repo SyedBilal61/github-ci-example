@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         os: [macos-latest, windows-latest]
-        java: ['11.0.28-temurin', '17.0.16+8-temurin']
+        java: ['17.0.16+8']  # Use only supported Java 17
 
     name: Build with Java ${{ matrix.java }} on ${{ matrix.os }}
     steps:
