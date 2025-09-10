@@ -1,4 +1,4 @@
- name: JavaCI with Maven on Linux
+name: JavaCI with Maven on Linux
 
 on:
   push:
@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         # test against several Java versions
-        java: [8,11]
+        java: [8, 11]
 
     name: Build with Java ${{ matrix.java }} on Linux
     steps:
@@ -22,4 +22,3 @@ jobs:
           java-version: ${{ matrix.java }}
       - name: Build with Maven
         run: mvn -f myproject/pom.xml clean verify
- 
