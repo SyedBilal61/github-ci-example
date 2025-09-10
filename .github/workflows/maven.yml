@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: [8, 11]
+        java: ['8.0.362-temurin', '11.0.20-temurin']
 
     name: Build with Java ${{ matrix.java }} on Linux
     steps:
