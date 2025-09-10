@@ -9,15 +9,16 @@ jobs:
     strategy:
       matrix:
         os: [macos-latest, windows-latest]
+        java: ['11.0.28-temurin', '17.0.16+8-temurin']
 
-    name: Build with Java 8 on ${{ matrix.os }}
+    name: Build with Java ${{ matrix.java }} on ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
 
-      - name: Setup JDK 8
+      - name: Setup JDK
         uses: actions/setup-java@v3
         with:
-          java-version: '8.0.362-temurin'
+          java-version: ${{ matrix.java }}
           distribution: temurin
 
       - name: Build with Maven
