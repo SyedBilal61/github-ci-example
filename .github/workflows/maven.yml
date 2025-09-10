@@ -20,4 +20,4 @@ jobs:
         with:
           java-version: ${{matrix.java}}
       - name: Build with Maven
-        run: mvn -f com.examples.myproject/pom.xml clean verify
+        run: mvn -f DummyProject/myproject/pom.xml clean verify
