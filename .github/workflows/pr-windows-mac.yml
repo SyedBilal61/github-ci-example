@@ -8,14 +8,17 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        # test against several OSes
         os: [macos-latest, windows-latest]
 
     name: Build with Java 8 on ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
+
       - name: Setup JDK 8
         uses: actions/setup-java@v3
         with:
+          java-version: '8'
           distribution: temurin
-          java-version: 8
+
+      - name: Build with Maven
+        run: mvn -f DummyProject/myproject/pom.xml clean verify

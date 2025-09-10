@@ -9,16 +9,17 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        # test against several Java versions
         java: [8, 11]
 
     name: Build with Java ${{ matrix.java }} on Linux
     steps:
       - uses: actions/checkout@v2
+
       - name: Setup JDK ${{ matrix.java }}
         uses: actions/setup-java@v3
         with:
-          distribution: temurin
           java-version: ${{ matrix.java }}
+          distribution: temurin
+
       - name: Build with Maven
         run: mvn -f DummyProject/myproject/pom.xml clean verify
