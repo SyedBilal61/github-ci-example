@@ -35,7 +35,7 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
 
       - name: Build and test with Maven
-        run: mvn -f com.examples.myproject/pom.xml clean verify ${{ matrix.additional-maven-args }}
+        run: mvn -f pom.xml clean verify ${{ matrix.additional-maven-args }}
         # <-- Modified: added ${{ matrix.additional-maven-args }} to run -Pjacoco on Java 8 only
 
       - name: Upload JaCoCo HTML report (Java 8 only)
