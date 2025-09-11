@@ -1,4 +1,3 @@
-package com.examples.myproject;
 
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
