@@ -1,9 +1,10 @@
 
-import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
-public class AppTest {
+public class App2Test {
     private App app;
 
     @Before
@@ -13,6 +14,6 @@ public class AppTest {
 
     @Test
     public void testSayHello() {
-        assertEquals("Hello", app.sayHello());
+        assertEquals("Hallo", app.sayHello());
     }
 }
