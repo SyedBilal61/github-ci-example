@@ -71,6 +71,26 @@
                 </executions>
             </plugin>
         </plugins>
+
+        <!-- ✅ NEW: Coveralls plugin inside pluginManagement -->
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.eluder.coveralls</groupId>
+                    <artifactId>coveralls-maven-plugin</artifactId>
+                    <version>4.3.0</version>
+                    <dependencies>
+                        <!-- ✅ Required for JDK 9+ -->
+                        <dependency>
+                            <groupId>javax.xml.bind</groupId>
+                            <artifactId>jaxb-api</artifactId>
+                            <version>2.3.1</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <!-- ✅ END NEW -->
     </build>
 
     <profiles>

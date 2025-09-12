@@ -14,6 +14,5 @@ public class App2Test {
 
     @Test
     public void testSayHello() {
-        assertEquals("Hallo", app.sayHello());
-    }
+    	cd ~/Desktop/DummyProject/    }
 }
