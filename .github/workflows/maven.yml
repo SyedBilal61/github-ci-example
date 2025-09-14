@@ -1,24 +1,46 @@
-name: JavaCI with Maven on Linux
+name: Java CI with Maven
 
 on:
   push:
+    branches: [ main ]
   pull_request:
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        # test against several Java versions:
-        java: [8, 11]
+        include:
+          - java: 8
+            additional-maven-args: "-Pjacoco"  # <-- Added: run JaCoCo only on Java 8
+          - java: 11
+            additional-maven-args: ""          # <-- Added: no additional args for Java 11
 
-    name: Build with Java${{matrix.java}} on Linux
     steps:
-      - uses: actions/checkout@v2
-      - name: Setup JDK${{matrix.java}}
-        uses: actions/setup-java@v1
-        with:
-          java-version: ${{matrix.java}}
-      - name: Build with Maven
-        run: mvn -f pom.xml clean verify
+      - name: Checkout code
+        uses: actions/checkout@v3
 
+      - name: Set up JDK ${{ matrix.java }}
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: temurin
+
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: Build and test with Maven
+        run: mvn -f pom.xml clean verify ${{ matrix.additional-maven-args }}
+        # <-- Modified: added ${{ matrix.additional-maven-args }} to run -Pjacoco on Java 8 only
+
+      - name: Upload JaCoCo HTML report (Java 8 only)
+        if: matrix.java == 8                     # <-- Added: only Java 8 job uploads report
+        uses: actions/upload-artifact@v3
+        with:
+          name: jacoco-report
+          path: target/site/jacoco
