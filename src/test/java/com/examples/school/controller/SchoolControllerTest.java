@@ -1,20 +1,18 @@
 package com.examples.school.controller;
 
-import com.examples.school.model.Student;
-import com.examples.school.repository.StudentRepository;
-import com.examples.school.view.StudentView;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.InOrder;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import static java.util.Arrays.asList;
+import static org.mockito.Mockito.*;
 
 import java.util.List;
 
-import static java.util.Arrays.asList;
-import static org.mockito.Mockito.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.*;
+
+import com.examples.school.model.Student;
+import com.examples.school.repository.StudentRepository;
+import com.examples.school.view.StudentView;
 
 public class SchoolControllerTest {
 
@@ -39,50 +37,72 @@ public class SchoolControllerTest {
         closeable.close();
     }
 
+    // Helper method to create students
+    private Student newStudent(String id, String name) {
+        return new Student(id, name);
+    }
+
+    // Test 1: show all students
     @Test
     public void testAllStudents() {
-        List<Student> students = asList(new Student());
+        List<Student> students = asList(newStudent("1", "test"));
         when(studentRepository.findAll()).thenReturn(students);
+
         schoolController.allStudents();
+
         verify(studentView).showAllStudents(students);
     }
 
+    // Test 2: add student when it does NOT exist
     @Test
     public void testNewStudentWhenStudentDoesNotAlreadyExist() {
-        Student student = new Student("1", "test");
+        Student student = newStudent("1", "test");
         when(studentRepository.findById("1")).thenReturn(null);
+
         schoolController.newStudent(student);
+
         InOrder inOrder = inOrder(studentRepository, studentView);
         inOrder.verify(studentRepository).save(student);
         inOrder.verify(studentView).studentAdded(student);
     }
 
+    // Test 3: add student when it ALREADY exists
     @Test
     public void testNewStudentWhenStudentAlreadyExists() {
-        Student studentToAdd = new Student("1", "test");
-        Student existingStudent = new Student("1", "name");
+        Student studentToAdd = newStudent("1", "test");
+        Student existingStudent = newStudent("1", "name");
         when(studentRepository.findById("1")).thenReturn(existingStudent);
+
         schoolController.newStudent(studentToAdd);
-        verify(studentView).showError("Already existing student with id 1", existingStudent);
+
+        verify(studentView)
+                .showError("Alreadyexistingstudentwithid1", existingStudent);
         verifyNoMoreInteractions(ignoreStubs(studentRepository));
     }
 
+    // Test 4: delete student when it exists
     @Test
     public void testDeleteStudentWhenStudentExists() {
-        Student studentToDelete = new Student("1", "test");
+        Student studentToDelete = newStudent("1", "test");
         when(studentRepository.findById("1")).thenReturn(studentToDelete);
+
         schoolController.deleteStudent(studentToDelete);
+
         InOrder inOrder = inOrder(studentRepository, studentView);
         inOrder.verify(studentRepository).delete("1");
         inOrder.verify(studentView).studentRemoved(studentToDelete);
     }
 
+    // Test 5: delete student when it does NOT exist
     @Test
     public void testDeleteStudentWhenStudentDoesNotExist() {
-        Student student = new Student("1", "test");
+        Student student = newStudent("1", "test");
         when(studentRepository.findById("1")).thenReturn(null);
+
         schoolController.deleteStudent(student);
-        verify(studentView).showError("No existing student with id 1", student);
+
+        verify(studentView)
+                .showError("Noexistingstudentwithid1", student);
         verifyNoMoreInteractions(ignoreStubs(studentRepository));
     }
 }

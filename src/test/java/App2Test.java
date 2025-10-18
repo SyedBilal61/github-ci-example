@@ -1,3 +1,4 @@
+import com.examples.school.model.Student;
 
 
 import org.junit.Before;
@@ -14,6 +15,6 @@ public class App2Test {
 
     @Test
     public void testSayHello() {
-    	 assertEquals("Hallo",app.sayHello());	    
+    	 assertEquals("Hello",app.sayHello());	    
     }
 }

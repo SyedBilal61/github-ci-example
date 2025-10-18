@@ -1,3 +1,4 @@
+import com.examples.school.model.Student;
 
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
